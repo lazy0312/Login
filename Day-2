@@ -1,1 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Page</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 50px; }
+    input { display: block; margin: 10px 0; padding: 8px; width: 200px; }
+    button { padding: 8px 15px; }
+    #result { margin-top: 10px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2>Login</h2>
+  <input type="text" id="username" placeholder="Username">
+  <input type="password" id="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+
+  <p id="result"></p>
+
+  <script>
+    async function login() {
+      let username = document.getElementById('username').value.trim();
+      let password = document.getElementById('password').value.trim();
+
+      // Replace with your MockAPI endpoint
+      let apiURL = "https://689f058c3fed484cf878c2e8.mockapi.io/login/user";
+
+      try {
+        let response = await fetch(apiURL);
+        let users = await response.json();
+
+        let user = users.find(u => u.username === username && u.password === password);
+
+        if (user) {
+          document.getElementById('result').innerText = "✅ Login Successful!";
+          document.getElementById('result').style.color = "green";
+        } else {
+          document.getElementById('result').innerText = "❌ Invalid Credentials";
+          document.getElementById('result').style.color = "red";
+        }
+      } catch (error) {
+        document.getElementById('result').innerText = "⚠️ Error fetching data";
+        document.getElementById('result').style.color = "orange";
+        console.error(error);
+      }
+    }
+  </script>
+</body>
+</html>
 
